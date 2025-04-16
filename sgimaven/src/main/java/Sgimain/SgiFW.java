@@ -19,6 +19,8 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import com.github.javafaker.Faker;
+
 import Locations.SgiWebLocations;
 import Locations.fwpaths;
 
@@ -27,7 +29,7 @@ public class SgiFW {
 	@Test
 	// public static void main(String[] args) {
 	public void fourWheeler() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\Chrome\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "D:/Selenium/chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -40,11 +42,51 @@ public class SgiFW {
 
 		driver.manage().window().maximize();
 
-		driver.get("http://uatweb.shriramgi.com/car-insurance");
+		//driver.get("http://uatweb.shriramgi.com/car-insurance");
+		driver.get("http://stage.shriramgi.com/car-insurance/");
+		
+		// Clear cookies
+		driver.manage().deleteAllCookies();
 
-		fwpaths.carRegNum.sendKeys("TN01AT0006");
+		// Clear localStorage and sessionStorage
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.localStorage.clear();");
+		js1.executeScript("window.sessionStorage.clear();");
+		
+	//=================================================
+        // Mobile number starts from 7000000000
+     /*   long mobileNum = 7000000001L;
 
-		fwpaths.carMobNum.sendKeys("7000000002");
+        // Vehicle number starts from TN01ATM0001
+        int vehicleNum = 1;
+
+        // Loop to generate the mobile and vehicle numbers
+        for (int i = 0; i < 10; i++) { // Example loop for 10 iterations
+            // Generate mobile number
+            String randomMobile = String.valueOf(mobileNum + i);
+
+            // Generate vehicle number
+            String randomVehicle = String.format("TN01ATM%04d", vehicleNum + i);
+
+            // Output the generated numbers
+            System.out.println("Mobile Number: " + randomMobile);
+            System.out.println("Vehicle Number: " + randomVehicle);
+            */
+		
+		String randomMobile = "9" + (int) (100000000 + Math.random() * 899999999);
+        String randomVehicle = "TN01TMT" + (int) (1000 + Math.random() * 8999);
+
+        System.out.println("Random Mobile: " + randomMobile);
+        System.out.println("Random Vehicle Number: " + randomVehicle);
+            
+      //================================================================================	
+		
+
+		// fwpaths.carRegNum.sendKeys("TN01AT0006"); 16-04-2025 commanded
+		fwpaths.carRegNum.sendKeys(randomVehicle);
+		
+
+		fwpaths.carMobNum.sendKeys(randomMobile);
 
 		// Thread.sleep(2000);
 		// check box
@@ -56,7 +98,7 @@ public class SgiFW {
 
 		}
 
-		fwpaths.insure_now_btn.click();
+		fwpaths.car_insurenowBtn.click();
 
 		fwpaths.otp1.sendKeys("1");
 		fwpaths.otp2.sendKeys("1");
@@ -83,7 +125,7 @@ public class SgiFW {
 		try {
 			fwpaths.editbtn.click();
 		} catch (Exception e) {
-			System.out.println("catch    = " + e.getMessage());
+			System.out.println("catch = edit button:  " + e.getMessage());
 
 		}
 		
@@ -163,7 +205,7 @@ public class SgiFW {
 			fwpaths.MakeName.sendKeys(Keys.ENTER);
 			fwpaths.MakeName.sendKeys(Keys.TAB);
 		} catch (Exception e) {
-			System.out.println("catch    =  make name" + e.getMessage());
+			System.out.println("catch    =  make name: " + e.getMessage());
 
 		}
 		
@@ -190,20 +232,21 @@ public class SgiFW {
 		
 		
 		try {
-			fwpaths.ModelName.clear();
-		Thread.sleep(1000);
-
+			WebElement element1 = driver.findElement(By.id("c_vd_Variant"));
+			Actions actions1 = new Actions(driver);
+			actions1.moveToElement(element1).click().build().perform();
+			fwpaths.ModelName.clear();		
+			Thread.sleep(1000);
 			fwpaths.ModelName.sendKeys("ALTO 800 VXI - PETROL"); // 
-			Thread.sleep(1500);
-			fwpaths.ModelName.sendKeys(Keys.ARROW_DOWN);
-			
+			Thread.sleep(1000);
+			fwpaths.ModelName.sendKeys(Keys.ARROW_DOWN);			
 			fwpaths.ModelName.sendKeys(Keys.ENTER);
 			fwpaths.ModelName.sendKeys(Keys.TAB);
 		}
 		
 		
 		catch (Exception e) {
-			System.out.println("catch    = Model name" + e.getMessage());
+			System.out.println("catch    = Model name: " + e.getMessage());
 
 		}
 		
@@ -246,10 +289,50 @@ public class SgiFW {
 
 			WebElement date = driver.findElement(By.xpath("//a[text()='31']"));
 			date.click();
+			registrationdate.sendKeys(Keys.TAB);
 		}catch (Exception e) {
-			System.out.println("catch    = reg date " + e.getMessage());
+			System.out.println("catch  = reg date:  " + e.getMessage());
 
 		}
+		
+		// Year of manufacture date yearOfManuf
+		/*
+		 * WebElement yearOfManuf1 =
+		 * driver.findElement(By.cssSelector("input#n_YearOfManifacture"));
+		 * Thread.sleep(1000); yearOfManuf1.clear();
+		 * 
+		 * yearOfManuf1.sendKeys(Keys.ARROW_DOWN); yearOfManuf1.sendKeys(Keys.ENTER);
+		 * yearOfManuf1.sendKeys(Keys.TAB);
+		 */
+		
+		/*
+		//Option 1: Remove readonly with JavaScript and Send Keys
+		//If the field becomes editable after removing readonly, try this:
+
+		
+		//WebDriver driver = ...;
+				
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		// Remove readonly attribute
+		js.executeScript("document.getElementById('n_YearOfManifacture').removeAttribute('readonly');");
+
+		// Send year
+		WebElement yearField = driver.findElement(By.id("n_YearOfManifacture"));
+		yearField.sendKeys("2020");
+				*/
+				
+				
+		JavascriptExecutor js2 = (JavascriptExecutor) driver;
+		js2.executeScript("document.getElementById('n_YearOfManifacture').value='2016';");
+
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		try {
@@ -259,7 +342,7 @@ public class SgiFW {
 			insuretype.click();
 			
 		}catch (Exception e) {
-			System.out.println("catch    =  insuretype " + e.getMessage());
+			System.out.println("catch  =  insuretype: " + e.getMessage());
 
 		}
 
@@ -279,13 +362,13 @@ public class SgiFW {
 			WebElement ppyear = driver.findElement(By.xpath("//*[@class='ui-datepicker-title']/child::select[2]"));
 			Thread.sleep(1000);
 			Select py = new Select(ppyear);
-			py.selectByVisibleText("2023");
+			py.selectByVisibleText("2025");
 
 			// ui-datepicker-title
 			WebElement ppmonth = driver.findElement(By.xpath("//*[@class='ui-datepicker-title']/child::*")); // *[@id='c_vd_RegistrationDate']/parent::*
 			Thread.sleep(1000);
 			Select ppm = new Select(ppmonth);
-			ppm.selectByVisibleText("Dec");
+			ppm.selectByVisibleText("May");
 			Thread.sleep(1000);
 
 			WebElement ppdate = driver.findElement(By.xpath("//a[text()='13']"));
@@ -293,7 +376,7 @@ public class SgiFW {
 			
 		}
 		catch (Exception e) {
-			System.out.println("catch    =  policy exp date" + e.getMessage());
+			System.out.println("catch =  policy exp date: " + e.getMessage());
 
 		}
 		
@@ -392,12 +475,22 @@ public class SgiFW {
 			System.out.println("catch    = premiumDetailsFormSubmit " + e.getMessage());
 
 		}
+		Faker fake = new Faker();
 		
+		
+		String firstname = fake.name().firstName();
+		String secondname = fake.name().firstName();
 		try {
 
 		// ow_name--------------------------------------------------------------------------------------------------------------------------------------
+			
+			
+			
+			
+			
 			fwpaths.ow_name.clear();
-			fwpaths.ow_name.sendKeys("John Wick");
+			//fwpaths.ow_name.sendKeys("John Wick"); old
+			fwpaths.ow_name.sendKeys(firstname);
 		
 		
 		}
@@ -412,9 +505,11 @@ public class SgiFW {
 		// ow_email
 		// ------------------------------------------------------------------------------------------------------------------------------------
          
+		String email = fake.internet().emailAddress();
 		fwpaths.ow_email.clear();
 		
-		fwpaths.ow_email.sendKeys("jhonwick@gmail.com");
+		//fwpaths.ow_email.sendKeys("jhonwick@gmail.com"); old
+		fwpaths.ow_email.sendKeys(email);
 		}catch (Exception e) {
 			System.out.println("catch    = ow_email " + e.getMessage());
 
@@ -447,7 +542,7 @@ public class SgiFW {
 		try {
 		//pan verify
 		
-		fwpaths.panNum.sendKeys("QWERT1234Y" );
+		fwpaths.panNum.sendKeys("QWERT1234U" );
 		//fwpaths.panNum.sendKeys(Keys.TAB);
 		}catch (Exception e) {
 			System.out.println("catch    = panNum " + e.getMessage());
@@ -455,6 +550,10 @@ public class SgiFW {
 		}
 		
 		Thread.sleep(2000);
+		
+		
+
+		
 		
 		//try {
 		//fwpaths.panDOB.click();
@@ -518,8 +617,73 @@ public class SgiFW {
 
 		fwpaths.ow_nomineeAge.sendKeys("22");
 
-		// ownerFormSubmit-----------------------------------------------------------------------------------------------------------------------------
+		
+		// ckyc_other_Option
+		
+		/*WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+            // Wait for the CKYC failure modal to be visible
+            WebElement ckycModal = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.id("ckyc-failed-model")));
 
+            // Optional: check the modal is displayed before interacting
+            if (ckycModal.isDisplayed()) {
+                System.out.println("CKYC failure modal detected.");
+
+                // Click on "Other Option" button if visible
+                WebElement otherOptionBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                        By.id("OtherOptionCkyc")));
+                otherOptionBtn.click();
+                System.out.println("Clicked 'Other Option'.");
+
+                // If you also want to click a "Continue" button later, add here
+                // WebElement continueBtn = driver.findElement(By.id("ContinueBtnId")); // Replace with actual ID
+                // continueBtn.click();
+            }
+
+        } catch (Exception e) {
+            System.out.println("CKYC failure modal not shown. Continuing normal flow.");
+        }*/
+		
+		
+		try {
+		    WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		    WebElement ckycModal = wait1.until(ExpectedConditions.visibilityOfElementLocated(
+		            By.id("ckyc-failed-model")));
+
+		    if (ckycModal.isDisplayed()) {
+		        System.out.println("CKYC failure modal detected.");
+
+		        WebElement otherOptionBtn = wait1.until(ExpectedConditions.visibilityOfElementLocated(
+		                By.id("OtherOptionCkyc")));
+
+		        // Scroll into view first
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", otherOptionBtn);
+
+		        // Then click using JS
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", otherOptionBtn);
+		        System.out.println("Clicked 'Other Option', Continuing ckyc failed flow.");
+		    }
+
+		} catch (Exception e) {
+		    System.out.println("CKYC failure modal not shown or button not interactable. Continuing normal flow.");
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		/*
+		
+		
+		
+		
+		//Page4 ownerFormSubmit-----------------------------------------------------------------------------------------------------------------------------
+// Need to write code if pan is verified click this submit button
 		fwpaths.carOwnerFormSubmit.click();
 		Thread.sleep(4000);
 		
@@ -527,8 +691,9 @@ public class SgiFW {
 		fwpaths.ckycSuccessPopup_check.click();
 		Thread.sleep(4000);
 		
+		*/
+//Page4--------------------------------------------------------------------------------------------------------------------------------------------------------
 		
-
 		// new_chassisNumber---------------------------------------------------------------------------------------------------------------------------
 		fwpaths.new_chassisNumber.sendKeys("JHGSV765TYFlF");
 		Thread.sleep(1000);

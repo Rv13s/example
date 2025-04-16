@@ -24,7 +24,7 @@ public class fw {
 	@Test
     public static  void main(String[] args) throws InterruptedException {
 	//public void fourwheeler() throws InterruptedException {
-    	System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\Chrome\\chromedriver.exe");
+    	System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\chromedriver.exe"); 
 		WebDriver driver = new ChromeDriver();
 		
         driver.manage().window().maximize();
@@ -32,18 +32,26 @@ public class fw {
          //driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
         
         
+       // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         
+        //driver.get("http://uatwebsit.shriramgi.com/");
         
-        driver.get("http://uatwebsit.shriramgi.com/");
+        driver.get("http://stage.shriramgi.com");
+        
 		
 		PageFactory.initElements(driver, fwpaths.class);
 		PageFactory.initElements(driver, SgiWebLocations.class);
+		
 //		
 		/*
 		WebElement home = driver.findElement(By.xpath("//div/a"));
 		home.click();
 		*/
-		WebElement car = driver.findElement(By.id("iqz4e"));
+		//WebElement car = driver.findElement(By.id("iqz4e")); old id
+		WebElement car = driver.findElement(By.id("reg_number"));
+		
 		car.click();
 		
 		
@@ -127,7 +135,8 @@ public class fw {
 	    	
 	    	//new WebDriverWait(getWebDriver(), 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@formcontrolname='reportingDealPermission' and @ng-reflect-name='reportingDealPermission']"))).click();
 	   
-	    	
+	    Thread.sleep(4000);	
+	    fwpaths.carregnum.clear();	
 	    fwpaths.carregnum.click();
 	    Thread.sleep(1500);
 	    fwpaths.carregnum.clear();
@@ -139,7 +148,7 @@ public class fw {
 	    
 	    // Enter Model Details-----------------------------------------------------------------------------------------------------------------
 	    
-	    Thread.sleep(1000);
+	    Thread.sleep(5000);
 	    
 	    //WebElement MakeName = driver.findElement(By.name("c_vd_MakeModel"));
 	    
@@ -323,7 +332,7 @@ public class fw {
 	   
 	   //ownerFormSubmit-----------------------------------------------------------------------------------------------------------------------------
 	   
-	   fwpaths.ownerFormSubmit.click();
+	  // fwpaths.ownerFormSubmit.click();
 	   Thread.sleep(4000);
 	   
 	   //new_chassisNumber---------------------------------------------------------------------------------------------------------------------------
@@ -361,7 +370,7 @@ public class fw {
 	   
 	   //policyInfoFormSubmit-------------------------------------------------------------------------------------------------------------------------
 	   
-	   fwpaths.policyInfoFormSubmit.click();
+	   //fwpaths.policyInfoFormSubmit.click();
 	   
 	   Thread.sleep(9000);
 	   

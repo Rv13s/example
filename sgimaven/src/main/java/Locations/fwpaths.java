@@ -9,6 +9,25 @@ import org.openqa.selenium.support.FindBy;
 
 public class fwpaths {
 	
+	//https://stage.shriramgi.com/car-insurance
+	////button[@type='submit' and contains(@class,'gisendotp')]
+	@FindBy(xpath="//button[@type='submit' and contains(@class,'gisendotp')]")
+	public static WebElement car_insurenowBtn;
+	
+	
+	//button#OtherOptionCkyc ckyc model fail
+	@FindBy(css = "button#OtherOptionCkyc")
+	public static WebElement ckyc_other_Option;
+	
+	//input#n_YearOfManifacture
+	@FindBy(css = "input#n_YearOfManifacture")
+	public static WebElement yearOfManuf;
+	
+	
+	
+	
+	
+	//========================================================
 	
 	//shriramgilogo
 		@FindBy(xpath="//div/a")
