@@ -122,12 +122,12 @@ public class SgiFW {
 
 		// Thread.sleep(1000);
 
-		try {
-			fwpaths.editbtn.click();
-		} catch (Exception e) {
-			System.out.println("catch = edit button:  " + e.getMessage());
-
-		}
+//		try {
+//			fwpaths.editbtn.click();
+//		} catch (Exception e) {
+//			System.out.println("catch = edit button:  " + e.getMessage());
+//
+//		}
 		
 //         WebElement carregnum = driver.findElement(By.id("c_regNumber"));
 //	    
@@ -731,7 +731,25 @@ public class SgiFW {
 		fwpaths.carPolicyInfoFormSubmit.click();
 
 		Thread.sleep(12000);
+		
+		
+		//==============================================
+		//Need to write click CKYC upload proceed btn. 
+		
+		//button[text()='Proceed']
+		//button[normalize-space(text())='Proceed']
+		//div[@class='modal-box']//button[contains(@class, 'modal-close-btn')]
 
+		driver.findElement(By.xpath("//button[normalize-space(text())='Proceed']")).click();	
+
+		
+		
+		
+		
+		
+		
+		
+		
 		// Checkbox-paynowForm
 		WebElement checkBoxElement = driver.findElement(By.id("paynowTerms"));
 		Actions paytermaction = new Actions(driver);
