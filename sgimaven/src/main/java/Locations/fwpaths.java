@@ -121,7 +121,7 @@ public class fwpaths {
 	//registrationdate 
 	@FindBy(id="c_vd_RegistrationDate")
 	public static WebElement registrationdate;
-	
+	//
 	//city 
 	@FindBy(id="c_vd_CityOfRegistration")
 	public static WebElement city;
